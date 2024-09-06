@@ -2,6 +2,10 @@
 
 Imagime is a image-to-music discovery app that allows users to upload their own photos and through the power of AI, get song recommendations tailored to the visual content of the image. Whether you're looking for the perfect track to accompany your latest photo or simply want to explore new music in a more personalized way, Imagime offers a fresh and innovative approach to music exploration.
 
+# Deployment
+
+## To use Imagime, visit [Imagime](https://imagime.onrender.com)
+
 ## Features
 
 - **Image-Based Music Recommendations**: Upload an image, and Imagime will suggest songs that match the mood, theme, or elements within your photo.
@@ -16,9 +20,11 @@ Imagime is a image-to-music discovery app that allows users to upload their own 
 - **Broader Social Experience**: Connect with others through shared musical discoveries, fostering a sense of community without the need for direct communication
 - **Consistency**: Provides a uniform user experience where all songs are open for interaction, maintaining a consistent and inclusive environment for all users.
 
-# Deployment
+### Home Anon Image 1
+![Home Anon 1](./static/images/assets/home-anon-img1.png)
 
-## To use Imagime, visit [Imagime](https://imagime.onrender.com)
+### Home Anon Image 2
+![Home Anon 2](./static/images/assets/home-anon-img2.png)
 
 ### How It Works:
 
