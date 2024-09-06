@@ -1,56 +1,60 @@
-# Capstone Project One
+# Imagime
 
-We have broken down the Capstone Project into easy-to-follow steps. Each step of the capstone contains a link with instructions for that step. Here’s a quick overview of what you’ll do for each step of your capstone project:
+Imagime is a image-to-music discovery app that allows users to upload their own photos and through the power of AI, get song recommendations tailored to the visual content of the image. Whether you're looking for the perfect track to accompany your latest photo or simply want to explore new music in a more personalized way, Imagime offers a fresh and innovative approach to music exploration.
 
-1. Step One: Initial Project Ideas: You’ll pick up to 3 project ideas to propose to your mentor and the Springboard community. You’ll also explore some potential APIs.
-2. Step Two: Project Proposal: For this step, you’ll write a proposal for the site you want to build. This will help your mentor better understand your chosen capstone project idea.
-3. Step Three: Schema Design and API Selection: After your mentor approves of your capstone project proposal, you’ll figure out the database design of your application and which API you’ll be using.
-4. Step Four: Coding User Flows: Once you’ve figured out what you’re building, you’ll write the code to implement it. It’s important to think about what you want a user’s experience to be like as they navigate your site.
-5. Step Five: Polishing Your Application: Once you have the core functionality implemented, you’ll focus on additional UI enhancements and styling for your application.
-6. Step Six: Documenting and Submission: You’ve done a lot of work so now it’s time to show your mentor your progress! Create a README in markdown, make sure your GitHub is organized, and submit your finalized project.
+## Features
 
-## Overview
+- **Image-Based Music Recommendations**: Upload an image, and Imagime will suggest songs that match the mood, theme, or elements within your photo.
+- **Favorite Tracks**: Users and other users can explore tracks and save them to their favorite list, as well as see what others have favorited.
+- **Profile Customization**: Users can edit their profiles, including uploading profile pictures and updating their bio.
+- **Responsive & User-Centered**: Easily navigate through the app whether on a desktop or smaller screens.
 
-For your first Capstone Project, you’ll build a database-driven website off an external
-API of your choice. Your finished capstone will be an integral part of your portfolio; it will demonstrate to potential employers everything you’ve learned from this course.
+### Social Interaction Features
 
-We want you to work on a challenging project that will incorporate all of the back-end
-skills you’ve been developing and some of your front-end skills from the last section.
-The goal of this project isn’t to create something that’s never been done before. You
-could potentially create a website similar to one that already exists, or use a popular
-API. That being said, we do encourage you to be creative when building your site. You’re free to choose any API you’d like to use and we encourage you to tap into your
-imagination throughout the project.
+- **Subtle Social Engagement**: Imagime allows users to like songs linked to other users' posts without direct interaction, offering a more passive and comfortable form of social engagement.
+- **Increased Engagement**: Users can appreciate and like songs across the platform, potentially increasing overall engagement within the app.
+- **Broader Social Experience**: Connect with others through shared musical discoveries, fostering a sense of community without the need for direct communication
+- **Consistency**: Provides a uniform user experience where all songs are open for interaction, maintaining a consistent and inclusive environment for all users.
 
-There is a term in software development called CRUD - Create, Read, Update, Delete. This refers to all of the basic operations that a relational database performs. Your website should have more functionality than simple CRUD.
+# Deployment
 
-## Examples
+## To use Imagime, visit [Imagime](https://imagime.onrender.com)
 
-There are thousands of free, publically available APIs. If you love cars, you can pick
-from dozens of automotive APIs to build something that will reflect your passion. If you’re more into history, look into an API that lists the nobility of Europe. If you love sports, build a site about India’s top cricketers or your local football league.
+### How It Works:
 
-Let’s give you an example of what a site could look like. Say you choose an API like The
-Movie Database, your site could have a landing page saying “Welcome To MyMovieDB” and a separate page that displays a sortable list of all the movies in the API. This would be CRUD.
+1. **Sign Up**: Create an account to start using the app.
+2. **Upload an Image**: Click the 'New Post' link in the navbar, upload an image or provide a URL, and let the app generate song recommendations.
+3. **Explore Songs**: Browse the list of songs, listen to previews, and like your favorites.
+4. **Manage Profile**: Update your profile with a custom image and bio and optionally delete your account.
 
-You could implement various filtering methods - to filter based on an actor, a director,
-the year the movie was released, etc. When you click on the record associated with the movie, you could redirect a user to a separate page that displays all of the data
-associated with that movie.
+## Why Imagime?
 
-Now let’s talk about bells and whistles. If you were to implement ONE feature like
-creating sharable lists of your favorite movies, finding and playing a trailer for the movie on-page, or a simple “recommendation system” that would recommend new movies based on similarities to movies you liked, this would go beyond CRUD. A simple
-“recommendation system” would be along the lines of, if you like Big Daddy with Adam
-Sandler, recommending other Adam Sandler comedies from the 90s or recommending
-movies his co-stars like Steve Buscemi starred in. This does not mean creating a
-complicated system from scratch like Netflix.
+### Personalized Discovery
+Imagime uses images as a starting point to generate song recommendations. This adds a layer of personalization that traditional music platforms don’t offer. Instead of searching for specific songs or genres, users can discover new music that matches the mood, theme, or elements in their photos, leading to serendipitous discoveries they might not have found otherwise.
 
-It is better to pick a project that errs on the side of simple and boring than a complex
-project with a million moving parts you can get stuck in.
+### Visual-Audio Connection
+The app taps into the connection between visuals and music. For creative individuals, photographers, and those who enjoy visual storytelling, Imagime bridges the gap between imagery and sound, creating a more immersive experience. This can be particularly appealing for users who enjoy pairing music with visual content, such as in social media posts or personal projects.
 
-[Here is an example of a previous project.](https://github.com/juliahazer/chart-my-team)
+### Social Discovery
+By allowing users to see what others have liked, Imagime fosters a subtle form of social interaction. Users can explore music favored by others, adding a layer of communal discovery that is more passive and less direct than following or sharing playlists on other platforms.
 
-## Guidelines
+### Unique Use Case
+Imagime’s approach makes it ideal for people looking for thematic music—for instance, someone creating a photo slideshow, working on a video project, or curating a specific mood for an event. It provides a quick and intuitive way to find music that fits a specific aesthetic or theme without needing extensive musical knowledge.
 
-1. You will use the following technologies in this project: Python/Flask, PostgreSQL, SQLAlchemy, Heroku, Jinja, RESTful APIs, JavaScript, HTML, CSS. Depending on your idea, you might end up using WTForms and other technologies discussed in the course.
-2. Every step of the project has submissions. This will alert your mentor to evaluate your work. Pay attention to the instructions so you submit the right thing. You will submit the link to your GitHub repo several times, this is for your mentor’s convenience. Your URL on GitHub is static and will not change.
-3. The first two steps require mentor approval to proceed, but after that, you are free to continue working on the project after you submit your work. For instance, you don’t need your mentor to approve your database schema before you start working on your site. Likewise, you don’t need your mentor to approve the first iteration of your site before you start polishing it.
-4. If you get stuck, there is a wealth of resources at your disposal. The course contains all of the material you will need to complete this project, but a well-phrased Google search might yield you an immediate solution to your problem. Don’t forget that your Slack community, TAs, and your mentor there to help you out.
-5. Make sure you use a free API and deploy your project on Heroku , so everyone can see your work!
+### Curated Experience
+The app can serve as a curation tool for users who prefer not to spend time searching and filtering through vast libraries of music. Instead, they receive tailored recommendations based on their personal images, making the process more streamlined and enjoyable.
+
+### Bringing Visual Art and Music Together
+In essence, Imagime is not just about finding music; it’s about creating an experience that combines visual art with auditory exploration, offering a novel and engaging way to discover new music.
+
+## Stretch Goals
+
+- **Enhanced Search**: Implement advanced filtering and searching options for song recommendations.
+- **Community Features**: Enable users to share their favorite image-song pairings with other users, fostering a collaborative discovery experience.
+- **Improved Mapping Algorithms: Work towards generating more accurate mappings between images and songs.
+- **Expanded Music Library & Functionality**: Include a broader range of music sources beyond Spotify and provide playlist options with a more sophisticated audio player experience.
+
+## API's Used
+
+- **[Everypixel API](https://labs.everypixel.com)**
+- **[Spotipy API](https://spotipy.readthedocs.io/en/2.24.0/)**
