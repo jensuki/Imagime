@@ -20,11 +20,11 @@ Imagime is a image-to-music discovery app that allows users to upload their own 
 - **Broader Social Experience**: Connect with others through shared musical discoveries, fostering a sense of community without the need for direct communication
 - **Consistency**: Provides a uniform user experience where all songs are open for interaction, maintaining a consistent and inclusive environment for all users.
 
-### Home Anon Image 1
-![Home Anon 1](./static/images/assets/home-anon-img1.png)
 
-### Home Anon Image 2
-![Home Anon 2](./static/images/assets/home-anon-img2.png)
+<p float="left">
+  <img src="./static/images/assets/home-anon-img1.png" alt="Home Anon 1" width="200" />
+  <img src="./static/images/assets/home-anon-img2.png" alt="Home Anon 2" width="200" />
+</p>
 
 ### How It Works:
 
