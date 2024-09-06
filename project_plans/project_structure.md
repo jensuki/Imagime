@@ -13,10 +13,7 @@ imagime/
 │   │   └── app.css
 │   └── images/
 │       ├── assets/
-│       │   ├── capstone_bg.jpg
-│       │   ├── default-pic.png
-│       │   ├── navbar-logo.png
-│       │   └── [seed images]
+│       │   ├── [images used for app]
 │       └── uploads/
 │           └── [user uploaded images]
 ├── templates/
