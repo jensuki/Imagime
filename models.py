@@ -3,7 +3,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime
 
 bcrypt = Bcrypt()
-db = SQLAlchemy
+db = SQLAlchemy()
 
 class User(db.Model):
     """User model instance"""
@@ -55,7 +55,7 @@ class User(db.Model):
 
         """
 
-        user = cls.query.filter_by(username-username).first()
+        user = cls.query.filter_by(username=username).first()
 
         if user:
             is_auth = bcrypt.check_password_hash(user.password, password)
@@ -127,7 +127,7 @@ class FavoritedSong(db.Model):
     song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False)
 
     # make post_id nullable if post with a favorited song gets deleted
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), ondelete='SET NULL', nullable=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id', ondelete='SET NULL'), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
     song = db.relationship('Song', backref='favorited_songs')
