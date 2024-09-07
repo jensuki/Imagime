@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_layout.html' %}
+{% endblock %}
+
+{% block no_posts_message %}
+<!-- {% if g.user and g.user.id == user.id %}
+<p>No posts to display. Start by <a href="{{ url_for('posts.add_post') }}">uploading an image!</a></p>
+{% else %}
+<p>{{ user.username }} hasn't posted yet!</p> -->
+{% endif %}
+{% endblock %}

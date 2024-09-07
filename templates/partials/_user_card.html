@@ -1,0 +1,13 @@
+<!--template for user cards-->
+
+<div class="card user-card">
+    <div class="card-body text-center">
+        <div class="image-wrapper mb-3">
+            <img src="{{ user.profile_img or url_for('static', filename='images/assets/default-pic.png') }}"
+                alt="Profile Image" class="profile-img">
+        </div>
+        <h5 class="card-title">@{{ user.username }}</h5>
+        <a href="{{ url_for('users.user_profile', user_id=user.id) }}" class="btn btn-outline-primary btn-sm">View
+            Profile</a>
+    </div>
+</div>

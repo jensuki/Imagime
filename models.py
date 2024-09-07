@@ -105,6 +105,8 @@ class PostSong(db.Model):
 
     """
 
+    __tablename__ = "postsongs"
+
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False)

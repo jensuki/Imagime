@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Image post + description -->
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12 m-auto">
+            <div class="card mb-4">
+
+                <!-- User Thumbnail and Username row-->
+                <div class="d-flex align-items-center mb-2 pt-2" style="margin-left: 10px;">
+                    <a href="{{ url_for('users.user_profile', user_id=post.user.id) }}"
+                        style="text-decoration: none; color: inherit;">
+                        <img src="{{ post.user.profile_img }}" alt="{{ post.user.username }}"
+                            class="rounded-circle me-2 post-thumbnail">
+                        <strong>{{ post.user.username }}</strong>
+                    </a>
+                </div>
+
+                <img src=" {{ post.image }}" alt="Post Image" class="post-img-top">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="card-title mb-0">{{ post.description }}</h2>
+
+                        <!-- ellipsis drop down right-->
+                        {% if g.user.id == post.user.id %}
+                        <div class="dropdown">
+                            <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <!-- delete post button -->
+                                <li>
+                                    <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
+                                        <button type="submit" class="dropdown-item text-danger">Delete Post</button>
+                                    </form>
+                                </li>
+                                <!-- saved tracks -->
+                                <li>
+                                    <a href="{{ url_for('users.show_favorited_songs', user_id=user.id)}}"
+                                        class="dropdown-item">Saved Tracks</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <hr>
+
+                    <!-- songs list -->
+                    <h5>Imagined Tracks:</h5>
+                    <ul class="list-group custom-audio-list" id="song-list">
+                        {% for song in songs %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center custom-audio-item">
+                            <div class="d-flex align-items-center" style="flex-grow: 1;">
+                                <img src="{{ song.image_url }}" alt="Album Cover" class="album-cover">
+                                <div>
+                                    <!--spotify link in new tab-->
+                                    <p class="mb-1">
+                                        <a href="{{ song.spotify_url }}" target="_blank" title="View on Spotify"
+                                            style="text-decoration: none; color: inherit;">
+                                            {{ song.title }} by {{ song.artist }}
+                                        </a>
+
+                                    </p>
+                                    <!-- custom audio player -->
+                                    <div class="audio-player">
+                                        <button class="play-btn" data-audio="{{ song.preview_url }}">
+                                            <i class="fa fa-play"></i>
+                                        </button>
+                                        <div class="progress">
+                                            <div class="progress-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- favorite button -->
+                            <form class="favorite-form"
+                                action="{{ url_for('posts.add_favorite', post_id=post.id, song_id=song.id) }}"
+                                method="POST">
+
+                                <button type="submit" class="favorite-btn">
+                                    <i class="fa {{ 'fas fa-heart' if song.id in favorited_song_ids else 'far fa-heart' }}"
+                                        data-heart="{{ url_for('posts.add_favorite', post_id=post.id, song_id=song.id) }}"></i>
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- load more button -->
+                    {% if songs|length >= 5 %}
+                    <div class="text-center mt-4">
+                        <button id="load-more-button" data-post-id="{{ post.id }}" data-offset="{{ offset }}"
+                            class="btn btn-primary">
+                            Load More Songs
+                        </button>
+                    </div>
+                    {% endif %}
+
+                    <!-- back to posts from this user -->
+                    <a href="{{ url_for('posts.user_posts', user_id=user.id) }}" class="btn btn-sm" id="back-button">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

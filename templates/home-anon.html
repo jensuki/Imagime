@@ -1,0 +1,28 @@
+<!--home page for anonymous users-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center position-relative">
+        <!-- left side - sign up invitation -->
+        <div class="col-lg-6 d-flex flex-column justify-content-start align-items-start p-5">
+            <h1>New to Imagime?</h1>
+            <p class="text-white">Join Imagime today and capture moments in sound.</p>
+            <a href="{{ url_for('users.signup') }}" class="btn btn-sm btn-outline-primary mt-4">Sign up</a>
+            <h2 class="mt-4 pt-3">Discover the perfect soundtrack to your memories</h2>
+        </div>
+
+        <!-- right side: hero images -->
+        <div class="col-lg-6 col-sm-12 position-relative">
+            <div class="home-anon-container d-flex justify-content-center">
+                <img src="/static/images/assets/home-anon-img1.png" alt="Sample 1" class="smooth-image" id="top-image">
+                <img src="/static/images/assets/home-anon-img2.png" alt="Sample 2" class="smooth-image"
+                    id="bottom-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

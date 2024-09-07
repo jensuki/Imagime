@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 col-lg-6 m-auto">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ user.username }}'s <i class="fa fa-heart"
+                            style="color: rgb(213, 51, 51);"></i> Tracks
+                    </h2>
+
+                    {% if g.user.id == user.id %}
+                    <!-- toggle to public / private favorites -->
+                    <form action="{{ url_for('toggle_favorites_public') }}" method="POST">
+                        <label class="form-check-label" for="favoritesVisibility">Make favorites public</label>
+                        <input type="checkbox" class="form-check-input" id="favoritesVisibility" name="favorites_public"
+                            {% if user.favorites_public %}checked{% endif %} onchange="this.form.submit()">
+                    </form>
+                    {% endif %}
+
+                    <!-- favorited songs list -->
+                    {% if favorited_songs %}
+                    <ul class="list-group custom-audio-list" id="song-list">
+                        {% for fave in favorited_songs %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center custom-audio-item">
+                            <div class="col-10 d-flex align-items-center">
+                                <img src=" {{ fave.song.image_url }}" class="album-cover" alt="Album Cover">
+                                <div>
+                                    <p class="mb-1">{{ fave.song.title }} by {{ fave.song.artist }}</p>
+
+                                    <!--custom audio player-->
+                                    <div class="audio-player">
+                                        <button class="play-btn" data-audio="{{ fave.song.preview_url }}">
+                                            <i class="fa fa-play"></i>
+                                        </button>
+                                        <div class="progress">
+                                            <div class="progress-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                {% if fave.post_id %}
+                                <!-- go back to post button -->
+                                <a href="{{ url_for('show_post', post_id=fave.post_id) }}"
+                                    class="btn btn-sm d-flex align-items-center" title="Go to Original Post">
+                                    <i class="fa-solid fa-arrow-left" id="from-post"></i>
+                                </a>
+
+                                {% endif %}
+                            </div>
+
+                            {% if g.user and g.user.id == fave.user_id%}
+                            <form class="remove-favorite-form"
+                                action="{{ url_for('remove_favorite', song_id=fave.song_id) }}" method="POST"
+                                class="ml-2 d-flex-align-items-center" title="Remove from Favorites">
+                                <button type="submit" class="btn btn-sm remove-fave-btn">
+                                    <i class="fa fa-xmark"></i></button>
+                            </form>
+                            {% endif %}
+
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No saved songs yet</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

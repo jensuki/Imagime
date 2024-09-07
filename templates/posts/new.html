@@ -1,4 +1,4 @@
-<!--sign up form-->
+<!--add image post form-->
 
 {% extends 'base.html' %}
 
@@ -6,7 +6,7 @@
 
 <div class="row justify-content-center mt-5">
     <div class="col-md-7 col-lg-5">
-        <h2 class="signup_message">Sign Up</h2>
+        <h2 class="login_message">Log In</h2>
         <form method="POST" enctype="multipart/form-data" id="user_form">
             {{ form.hidden_tag() }}
 
@@ -17,7 +17,7 @@
             {{ field(placeholder=field.label.text, class_="form-control mb-3") }}
             {% endfor %}
 
-            <button type="submit" class="btn btn-outline-primary">Sign up</button>
+            <button type="submit" class="btn btn-outline-primary">Post</button>
         </form>
     </div>
 </div>

@@ -50,18 +50,17 @@ def signup():
 
             do_login(new_user)
             flash(f'Welcome {new_user.username}!', 'success')
-            return redirect('/')
+            return redirect(url_for('posts.home'))
 
         except IntegrityError:
             db.session.rollback()
             flash('Username or email already taken', 'danger')
 
-    else:
-        print('Form did not validate')
-        for field, errors in form.errors.items():
-            for error in errors:
-                print(f'Error in {field}: {error}')
-
+    # else:
+    #     print('Form did not validate')
+    #     for field, errors in form.errors.items():
+    #         for error in errors:
+    #             print(f'Error in {field}: {error}')
 
     return render_template('users/signup.html', form=form)
 
@@ -80,7 +79,7 @@ def login():
         if user:
             do_login(user)
             flash(f'Welcome back, {user.username}', 'success')
-            return redirect('/')
+            return redirect(url_for('posts.home'))
 
         flash('Invalid credentials', 'danger')
 
@@ -93,7 +92,7 @@ def logout():
     do_logout()
 
     flash('You have successfully logged out', 'success')
-    return redirect(url_for('login'))
+    return redirect(url_for('users.login'))
 
 @users_bp.route('/users')
 def list_users():
@@ -112,9 +111,9 @@ def list_users():
 def user_profile(user_id):
     """Display users profile with their posts if any"""
 
-    if g.user is None:
+    if not g.user:
         flash('You must be logged in to view this page', 'danger')
-        return redirect('/login')
+        return redirect(url_for('users.login'))
 
     user = User.query.get_or_404(user_id)
 
@@ -156,7 +155,7 @@ def edit_profile():
 
             # if URL field is '', set default image, unlesss theres an uploaded image
             elif form.profile_img_url.data == '':
-                if not g.user.profile_img.startsWith('/static/images/uploads/'):
+                if not g.user.profile_img.startswith('/static/images/uploads/'):
                     g.user.profile_img = url_for('static', filename='images/assets/default-pic.png')
 
             # handle optional bio field
@@ -164,7 +163,7 @@ def edit_profile():
 
             db.session.commit()
             flash('Profile successfully updated', 'success')
-            return redirect(f'/users/{g.user.id}')
+            return redirect(url_for('users.user_profile', user_id=g.user.id))
 
         flash('Incorrect password, please try again', 'danger')
 
@@ -181,7 +180,7 @@ def delete_user():
     db.session.delete(g.user)
     db.session.commit()
 
-    return redirect('/signup')
+    return redirect(url_for('users.signup'))
 
 @users_bp.route('/users/<int:user_id>/favorited')
 def show_favorited_songs(user_id):
@@ -189,13 +188,13 @@ def show_favorited_songs(user_id):
 
     if not g.user:
         flash('Access unauthorized', 'danger')
-        return redirect('/')
+        return redirect(url_for('posts.home'))
 
     user = User.query.get_or_404(user_id)
 
     # if not public + not the logged in user, prevent access
     if not user.favorites_public and g.user.id != user.id:
-        return redirect('/')
+        return redirect(url_for('posts.home'))
 
     favorited_songs = (FavoritedSong
                        .query
@@ -214,4 +213,4 @@ def toggle_favorites_public():
     g.user.favorites_public = not g.user.favorites_public
     db.session.commit()
 
-    return redirect(url_for('show_favorited_songs', user_id=g.user.id))
+    return redirect(url_for('users.show_favorited_songs', user_id=g.user.id))

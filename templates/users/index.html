@@ -1,0 +1,53 @@
+<!--list of all users in DB-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if users|length == 0 %}
+<h3 class="text-center my-5">No users found</h3>
+{% else %}
+
+<div class="container py-4">
+    <div class="row">
+        {% for user in users %}
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4">
+            <div class="card mx-auto" style="width: 15rem;">
+                <div class="card-body text-center" style="height: 200px;">
+                    <a href="{{ url_for('users.user_profile', user_id=user.id) }}">
+                        <img src="{{ user.profile_img }}" class="profile-img mb-3 rounded-circle"
+                            alt="User Profile image">
+                    </a>
+                    <h3 class="card-title">{{ user.username }}</h3>
+                    {% if user.bio %}
+                    <p class="card-text">{{ user.bio }}</p>
+                    {% endif %}
+                </div>
+                <!--post stats | favorited stats-->
+                <div class="card-body">
+                    <div class="d-flex justify-content-evenly text-center">
+                        <div class="stat-item">
+                            <p class="small text-muted mb-1">Posts</p>
+                            <h5><a href="{{ url_for('posts.user_posts', user_id=user.id)}}">{{ user.posts | length}}</a>
+                            </h5>
+                        </div>
+                        <div class="stat-item">
+                            <p class="small text-muted mb-1">Favorites</p>
+                            {% if user.favorites_public or g.user.id == user.id %}
+                            <h5><a href="{{ url_for('users.show_favorited_songs', user_id=user.id) }}">
+                                    {{ user.favorited_songs | length }}</a></h5>
+                            {% else %}
+                            <h5 class="text-muted">Private</h5>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

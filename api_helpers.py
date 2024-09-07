@@ -50,7 +50,7 @@ def keywords_to_songs(keywords, limit=5):
     for keyword in keywords:
         result = sp.search(q=keyword, type='track', limit=limit)
 
-        for track in result['track']['items']:
+        for track in result['tracks']['items']:
             title = track['name']
             artist = track['artists'][0]['name']
             combos = (title, artist) # create tuple of title and artist

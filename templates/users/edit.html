@@ -1,0 +1,38 @@
+<!--edit profile form-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-5">
+        <h2>Edit your Profile</h2>
+        <form method="POST" enctype="multipart/form-data" id="user_form">
+            {{ form.hidden_tag() }}
+
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="mb-3">
+                {% for error in field.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                {% if field.name == 'profile_img_url' %}
+                <!--if valid URL , keep current image url-->
+                {{ field(value=g.user.profile_img if g.user.profile_img.startswith('http') else '',
+                placeholder=field.label.text, class_="form-control mb-3") }}
+                {% else %}
+                {{ field(placeholder=field.label.text, class_="form-control mb-3") }}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-primary">Save</button>
+                <a href="{{ url_for('users.user_profile', user_id=g.user.id) }}"
+                    class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

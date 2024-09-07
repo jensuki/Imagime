@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% set user = g.user %}
+{% include 'partials/_layout.html' %}
+{% endblock %}
+
+{% block no_posts_message %}
+{% endblock %}
