@@ -37,7 +37,7 @@ class EditProfileForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
     profile_img_url = StringField('Profile Image URL or Attach a file below', validators=[Optional(), URL(), validate_profile_img])
     profile_img_file = FileField('Upload Profile Image', validators=[Optional(), FileAllowed(['png', 'jpg', 'jpeg']), validate_profile_img])
-    bio = TextAreaField('Bio')
+    bio = TextAreaField('Bio', validators=[Length(max=30)])
 
 class AddImageForm(FlaskForm):
     """Form for posting a new image"""

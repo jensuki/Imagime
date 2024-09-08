@@ -1,5 +1,5 @@
 import os
-from flask import Flask, session, g
+from flask import Flask, session, g, request
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 from blueprints.users.routes import users_bp
@@ -33,4 +33,6 @@ def add_user_to_g():
         g.user = User.query.get(session[CURR_USER_KEY])
     else:
         g.user = None
+
+
 

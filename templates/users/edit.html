@@ -16,7 +16,7 @@
                 <span class="text-danger">{{ error }}</span>
                 {% endfor %}
                 {% if field.name == 'profile_img_url' %}
-                <!--if valid URL , keep current image url-->
+                <!--if valid URL , keep current image url -->
                 {{ field(value=g.user.profile_img if g.user.profile_img.startswith('http') else '',
                 placeholder=field.label.text, class_="form-control mb-3") }}
                 {% else %}

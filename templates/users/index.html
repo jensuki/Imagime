@@ -13,25 +13,31 @@
         {% for user in users %}
         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4">
             <div class="card mx-auto" style="width: 15rem;">
-                <div class="card-body text-center" style="height: 200px;">
+                <div class="card-body text-center">
                     <a href="{{ url_for('users.user_profile', user_id=user.id) }}">
                         <img src="{{ user.profile_img }}" class="profile-img mb-3 rounded-circle"
-                            alt="User Profile Image"></a>
+                            alt="User Profile Image">
+                    </a>
                     <h5 class="card-title">{{ user.username }}</h5>
-                    {% if user.bio %}
-                    <p class="card-text">{{ user.bio }}</p>
-                    {% endif %}
+                    <small class="card-text card-bio">
+                        {% if user.bio %}
+                        {{ user.bio }}
+                        {% else %}
+                        &nbsp; <!-- Adds a non-breaking space if there's no bio -->
+                        {% endif %}
+                    </small>
                 </div>
+
                 <div class="card-body">
                     <div class="d-flex justify-content-evenly text-center">
                         <div class="stat-item">
-                            <p class="small text-muted mb-1">Posts</p>
+                            <p class="small text-muted mb-0">Posts</p>
                             <h5><a href="{{ url_for('posts.user_posts', user_id=user.id) }}">{{ user.posts | length
                                     }}</a>
                             </h5>
                         </div>
                         <div class="stat-item">
-                            <p class="small text-muted mb-1">Favorites</p>
+                            <p class="small text-muted mb-0">Favorites</p>
                             {% if user.favorites_public or g.user.id == user.id %}
                             <h5><a href="{{ url_for('users.show_favorited_songs', user_id=user.id)}}">{{
                                     user.favorited_songs | length }}</a></h5>

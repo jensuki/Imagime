@@ -85,7 +85,7 @@ h3 {
     }
 }
 
-/* user profile card */
+/* left aside user profile card */
 .user-card {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -99,6 +99,7 @@ h3 {
     border-radius: 50%;
     border: 2px solid #ddd;
 }
+
 
 .btn {
     transition: 100ms ease-in-out;

@@ -161,20 +161,27 @@ def edit_profile():
 
         flash('Incorrect password, please try again', 'danger')
 
-    return render_template('/users/edit.html', form=form, user_id=g.user.id)
+    return render_template('users/edit.html', form=form, user_id=g.user.id)
 
-@users_bp.route('/users/delete', methods=['POST'])
-def delete_user():
-    """Delete a users account from DB"""
+@users_bp.route('/users/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    """Delete a user's account by simulating DELETE method"""
 
-    do_authorize()
+    # check if the hidden field is simulating a DELETE request
+    if request.form.get('_method') == 'DELETE':
+        do_authorize()
 
-    do_logout()
+        if g.user.id != user_id:
+            flash('Access unauthorized', 'danger')
+            return redirect(url_for('posts.home'))
 
-    db.session.delete(g.user)
-    db.session.commit()
+        do_logout()
 
-    return redirect(url_for('users.signup'))
+        db.session.delete(g.user)
+        db.session.commit()
+
+        return redirect(url_for('users.signup'))
+
 
 @users_bp.route('/users/<int:user_id>/favorited')
 def show_favorited_songs(user_id):
