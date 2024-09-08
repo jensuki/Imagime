@@ -103,7 +103,7 @@ def list_users():
     if not search:
         users = User.query.all()
     else:
-        users = User.query.filter(User.username.ilike(f'%{search}')).all()
+        users = User.query.filter(User.username.ilike(f'%{search}%')).all()
 
     return render_template('users/index.html', users=users)
 

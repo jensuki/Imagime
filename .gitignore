@@ -2,3 +2,5 @@ venv/
 .vscode/
 __pycache__/
 secret.py
+
+/static/images/uploads/

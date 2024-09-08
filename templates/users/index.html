@@ -1,4 +1,4 @@
-<!--list of all users in DB-->
+<!--Display all users in the DB through search -->
 
 {% extends 'base.html' %}
 
@@ -16,26 +16,25 @@
                 <div class="card-body text-center" style="height: 200px;">
                     <a href="{{ url_for('users.user_profile', user_id=user.id) }}">
                         <img src="{{ user.profile_img }}" class="profile-img mb-3 rounded-circle"
-                            alt="User Profile image">
-                    </a>
-                    <h3 class="card-title">{{ user.username }}</h3>
+                            alt="User Profile Image"></a>
+                    <h5 class="card-title">{{ user.username }}</h5>
                     {% if user.bio %}
                     <p class="card-text">{{ user.bio }}</p>
                     {% endif %}
                 </div>
-                <!--post stats | favorited stats-->
                 <div class="card-body">
                     <div class="d-flex justify-content-evenly text-center">
                         <div class="stat-item">
                             <p class="small text-muted mb-1">Posts</p>
-                            <h5><a href="{{ url_for('posts.user_posts', user_id=user.id)}}">{{ user.posts | length}}</a>
+                            <h5><a href="{{ url_for('posts.user_posts', user_id=user.id) }}">{{ user.posts | length
+                                    }}</a>
                             </h5>
                         </div>
                         <div class="stat-item">
                             <p class="small text-muted mb-1">Favorites</p>
                             {% if user.favorites_public or g.user.id == user.id %}
-                            <h5><a href="{{ url_for('users.show_favorited_songs', user_id=user.id) }}">
-                                    {{ user.favorited_songs | length }}</a></h5>
+                            <h5><a href="{{ url_for('users.show_favorited_songs', user_id=user.id)}}">{{
+                                    user.favorited_songs | length }}</a></h5>
                             {% else %}
                             <h5 class="text-muted">Private</h5>
                             {% endif %}
@@ -44,10 +43,9 @@
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    {% endif %}
 </div>
-</div>
-{% endif %}
 
 {% endblock %}

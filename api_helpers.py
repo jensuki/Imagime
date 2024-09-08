@@ -66,7 +66,7 @@ def keywords_to_songs(keywords, limit=5):
                     'preview_url': track['preview_url']
                 }
 
-            songs.append(song_details)
-            seen_combos.add(combos) # mark this combo as seen
+                songs.append(song_details)
+                seen_combos.add(combos) # mark this combo as seen
 
     return songs

@@ -13,7 +13,7 @@
 
                     {% if g.user.id == user.id %}
                     <!-- toggle to public / private favorites -->
-                    <form action="{{ url_for('toggle_favorites_public') }}" method="POST">
+                    <form action="{{ url_for('users.toggle_favorites_public') }}" method="POST">
                         <label class="form-check-label" for="favoritesVisibility">Make favorites public</label>
                         <input type="checkbox" class="form-check-input" id="favoritesVisibility" name="favorites_public"
                             {% if user.favorites_public %}checked{% endif %} onchange="this.form.submit()">
@@ -45,7 +45,7 @@
                             <div class="d-flex align-items-center">
                                 {% if fave.post_id %}
                                 <!-- go back to post button -->
-                                <a href="{{ url_for('show_post', post_id=fave.post_id) }}"
+                                <a href="{{ url_for('posts.show_post', post_id=fave.post_id) }}"
                                     class="btn btn-sm d-flex align-items-center" title="Go to Original Post">
                                     <i class="fa-solid fa-arrow-left" id="from-post"></i>
                                 </a>
@@ -55,7 +55,7 @@
 
                             {% if g.user and g.user.id == fave.user_id%}
                             <form class="remove-favorite-form"
-                                action="{{ url_for('remove_favorite', song_id=fave.song_id) }}" method="POST"
+                                action="{{ url_for('posts.remove_favorite', song_id=fave.song_id) }}" method="POST"
                                 class="ml-2 d-flex-align-items-center" title="Remove from Favorites">
                                 <button type="submit" class="btn btn-sm remove-fave-btn">
                                     <i class="fa fa-xmark"></i></button>
