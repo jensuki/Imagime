@@ -16,7 +16,7 @@
                     <form action="{{ url_for('users.toggle_favorites_public') }}" method="POST">
                         <label class="form-check-label" for="favoritesVisibility">Make favorites public</label>
                         <input type="checkbox" class="form-check-input" id="favoritesVisibility" name="favorites_public"
-                            {% if user.favorites_public %}checked{% endif %} onchange="this.form.submit()">
+                            {% if user.favorites_public %}checked{% endif %}>
                     </form>
                     {% endif %}
 
@@ -28,17 +28,8 @@
                             <div class="col-10 d-flex align-items-center">
                                 <img src=" {{ fave.song.image_url }}" class="album-cover" alt="Album Cover">
                                 <div>
-                                    <p class="mb-1">{{ fave.song.title }} by {{ fave.song.artist }}</p>
-
-                                    <!--custom audio player-->
-                                    <div class="audio-player">
-                                        <button class="play-btn" data-audio="{{ fave.song.preview_url }}">
-                                            <i class="fa fa-play"></i>
-                                        </button>
-                                        <div class="progress">
-                                            <div class="progress-bar"></div>
-                                        </div>
-                                    </div>
+                                    {% set song = fave.song %}
+                                    {% include 'partials/_audio_player.html' %}
                                 </div>
                             </div>
 

@@ -1,0 +1,18 @@
+<!--audio player template-->
+
+<p class="mb-1">
+    <a href="{{ song.spotify_url }}" target="_blank" title="View on Spotify"
+        style="text-decoration: none; color: inherit;">
+        {{ song.title }} by {{ song.artist }}
+    </a>
+</p>
+
+<!-- Custom audio player -->
+<div class="audio-player">
+    <button class="play-btn" data-audio="{{ song.preview_url }}">
+        <i class="fa fa-play"></i>
+    </button>
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
+</div>

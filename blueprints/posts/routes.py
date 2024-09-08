@@ -150,24 +150,29 @@ def show_post(post_id):
              .limit(limit)
              .all())
 
-    # fetch favorited song ID's for the current user
-    favorited_song_ids = [fav.song_id for fav in g.user.favorited_songs] if g.user else []
+    # check if the user is logged in and gather favorited songs
+    favorited_song_ids = []
+    if g.user:
+        favorited_song_ids = [fav.song_id for fav in g.user.favorited_songs]
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        # Return JSON data with key and value
+    # return JSON if `json` query parameter is present
+    if request.args.get('json'):
         return jsonify({
-            'songs': [{
-                'title': song.title,
-                'artist': song.artist,
-                'preview_url': song.preview_url,
-                'image_url': song.image_url,
-                'id': song.id,
-                'spotify_url': song.spotify_url,
-                'is_favorited': song.id in favorited_song_ids,
-            } for song in songs]
+            'songs': [
+                {
+                    'title': song.title,
+                    'artist': song.artist,
+                    'preview_url': song.preview_url,
+                    'image_url': song.image_url,
+                    'id': song.id,
+                    'spotify_url': song.spotify_url,
+                    'is_favorited': song.id in favorited_song_ids,
+                } for song in songs
+            ]
         })
 
-    # Return the full template for the initial load
+
+    # return the full template for the initial load
     return render_template(
         'posts/detail.html',
         post=post,
@@ -219,7 +224,7 @@ def remove_favorite(song_id):
     do_authorize()
 
     # find the favorited song entry for current user
-    favorite = FavoritedSong.query.filter_by(user_id=g.user.id, song_id=song_id).firs()
+    favorite = FavoritedSong.query.filter_by(user_id=g.user.id, song_id=song_id).first()
 
     if favorite:
         db.session.delete(favorite)
