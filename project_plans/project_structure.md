@@ -38,6 +38,12 @@ imagime/
 │       ├── profile.html
 │       └── signup.html
 ├── tests/
+│   ├── test_api_helpers.py
+│   ├── test_image.jpg
+│   ├── test_post_models.py
+│   ├── test_post_views.py
+│   ├── test_user_models.py
+│   └── test_user_views.py
 ├── utils/
 │   ├── helpers.py
 │   └── secrets.py

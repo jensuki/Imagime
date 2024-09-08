@@ -20,7 +20,7 @@ def signup():
     form = SignUpForm()
 
     if form.validate_on_submit():
-        print('Form validated successfully')
+
         try:
             # handle profile image
             profile_img_url = form.profile_img_url.data
@@ -55,12 +55,6 @@ def signup():
         except IntegrityError:
             db.session.rollback()
             flash('Username or email already taken', 'danger')
-
-    # else:
-    #     print('Form did not validate')
-    #     for field, errors in form.errors.items():
-    #         for error in errors:
-    #             print(f'Error in {field}: {error}')
 
     return render_template('users/signup.html', form=form)
 

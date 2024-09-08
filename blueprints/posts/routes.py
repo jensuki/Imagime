@@ -14,7 +14,6 @@ posts_bp = Blueprint('posts', __name__)
 
 @posts_bp.route('/')
 def home():
-    print('HOME ROUTE ACCESSED')
     """
     Display home page if user is logged in
     Display home-anon if anon user
@@ -79,7 +78,7 @@ def add_post():
                 description=description
             )
             db.session.add(new_post)
-            db.session.flush()
+
 
             for song in songs:
                 existing_song = Song.query.filter_by(preview_url=song['preview_url']).first()
@@ -93,7 +92,7 @@ def add_post():
                         preview_url=song.get('preview_url')
                     )
                     db.session.add(existing_song)
-                    db.session.flush()
+
 
                     # check if post-song association already exists
                     post_song_exists = PostSong.query.filter_by(post_id=new_post.id, song_id=existing_song.id).first()
@@ -254,5 +253,5 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
 
-    flash('Post deleted succesfully', 'success')
+    flash('Post deleted successfully', 'success')
     return redirect(url_for('users.user_profile', user_id=g.user.id))
