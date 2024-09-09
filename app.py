@@ -4,6 +4,9 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 from blueprints.users.routes import users_bp
 from blueprints.posts.routes import posts_bp
+from dotenv import load_dotenv
+
+load_dotenv()
 
 CURR_USER_KEY = 'curr_user'
 
@@ -21,7 +24,10 @@ app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'images', 'upl
 
 debug = DebugToolbarExtension(app)
 
+# connect DB
 connect_db(app)
+
+
 
 # register blueprints
 app.register_blueprint(users_bp, url_prefix='')

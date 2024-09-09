@@ -1,3 +1,4 @@
+alembic==1.12.1
 appnope==0.1.0
 async-timeout==4.0.3
 backcall==0.1.0
@@ -14,16 +15,19 @@ Faker==0.9.1
 Flask==1.0.2
 Flask-Bcrypt==0.7.1
 Flask-DebugToolbar==0.10.1
+Flask-Migrate==4.0.7
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 greenlet==3.0.3
 idna==3.7
 importlib-metadata==6.7.0
+importlib-resources==5.12.0
 ipython==7.0.1
 ipython-genutils==0.2.0
 itsdangerous==0.24
 jedi==0.13.1
 Jinja2==2.11.3
+Mako==1.2.4
 MarkupSafe==1.1.1
 numpy==1.21.6
 packaging==24.0
