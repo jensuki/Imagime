@@ -1,9 +1,16 @@
+import os
 import requests
 import mimetypes
 import random
-from utils.secret import EPIX_CLIENT_ID, EPIX_API_KEY, SPOT_CLIENT_ID, SPOT_API_KEY
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+
+# Load credentials from environment variables
+EPIX_CLIENT_ID = os.getenv("EPIX_CLIENT_ID")
+EPIX_API_KEY = os.getenv("EPIX_API_KEY")
+SPOT_CLIENT_ID = os.getenv("SPOT_CLIENT_ID")
+SPOT_API_KEY = os.getenv("SPOT_API_KEY")
+
 
 # setup spotipy credentials
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=SPOT_CLIENT_ID, client_secret=SPOT_API_KEY))
