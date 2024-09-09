@@ -5,4 +5,4 @@ secret.py
 .cache/
 /static/images/uploads/
 .env
-.DS_Store/.DS_Store
+.DS_Store
