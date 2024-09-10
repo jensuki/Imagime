@@ -28,7 +28,6 @@ debug = DebugToolbarExtension(app)
 connect_db(app)
 
 
-
 # register blueprints
 app.register_blueprint(users_bp, url_prefix='')
 app.register_blueprint(posts_bp, url_prefix='')
@@ -39,6 +38,4 @@ def add_user_to_g():
         g.user = User.query.get(session[CURR_USER_KEY])
     else:
         g.user = None
-
-
 
