@@ -24,7 +24,7 @@ def home():
         posts = (Post
                  .query
                  .order_by(Post.timestamp.desc())
-                 .limit(10)
+                 .limit(15)
                  .all())
 
         return render_template('home.html', posts=posts)

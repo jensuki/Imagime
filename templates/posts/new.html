@@ -7,7 +7,13 @@
 <div class="row justify-content-center mt-5">
     <div class="col-md-7 col-lg-5">
         <h2 class="add_message">Add Post</h2>
-        <form method="POST" enctype="multipart/form-data" id="user_form">
+
+        <!-- loading spinner  -->
+        <div id="loading-spinner" class="text-center" style="display: none;">
+            <i class="fa-solid fa-circle-notch fa-spin fa-3x text-light mt-2"></i>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" id="image_form">
             {{ form.hidden_tag() }}
 
             {% for field in form if field.widget.input_type != 'hidden' %}

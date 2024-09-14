@@ -4,6 +4,29 @@ document.addEventListener('DOMContentLoaded', function () {
     let offset = loadMoreButton ? parseInt(loadMoreButton.getAttribute('data-offset')) : 0;
     const postId = loadMoreButton ? loadMoreButton.getAttribute('data-post-id') : null;
 
+    const image_form = document.getElementById('image_form');
+    const spinner = document.getElementById('loading-spinner');
+
+    // event listener for image form
+    if (image_form) {
+        image_form.addEventListener('submit', function (event) {
+            event.preventDefault();  // Prevent the default form submission for image_form only
+
+            // show the spinner
+            spinner.style.display = 'block';
+
+            const submitButton = image_form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            document.querySelector('.add_message').style.display = 'none';
+            image_form.style.display = 'none';
+
+            // submit form after showing the spinner / hiding elements
+            image_form.submit();
+        });
+    }
+
+    // custom audio controls
+
     let currentAudio = null;
     let currentButton = null;
 
@@ -42,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             button.innerHTML = '<i class="fa fa-play"></i>';
         }
     }
+
 
     // Function to attach the play/pause event listeners
     function attachPlayListeners() {
