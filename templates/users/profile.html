@@ -1,5 +1,4 @@
-<!--user detail card-->
-
+<!-- user detail card -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -12,13 +11,15 @@
             <p class="card-text card-bio">{{ user.bio }}</p>
             {% endif %}
         </div>
+
         <div class="card-body">
-            <div class="d-flex justify-content-evenly text-center">
-                <div class="stat-item">
+            <div class="row text-center">
+                <!-- First row: Posts and Favorites -->
+                <div class="col-6">
                     <p class="small text-muted mb-0">Posts</p>
                     <h5><a href="{{ url_for('posts.user_posts', user_id=user.id) }}">{{ user.posts | length }}</a></h5>
                 </div>
-                <div class="stat-item">
+                <div class="col-6">
                     <p class="small text-muted mb-0">Favorites</p>
                     {% if user.favorites_public or g.user.id == user.id %}
                     <h5><a href="{{ url_for('users.show_favorited_songs', user_id=user.id) }}">{{ user.favorited_songs |
@@ -28,13 +29,37 @@
                     {% endif %}
                 </div>
             </div>
+            <hr>
+            <div class="row text-center">
+                <!-- Second row: Following and Followers -->
+                <div class="col-6">
+                    <p class="small text-muted mb-0">Following</p>
+                    <h5><a href="{{ url_for('users.show_following', user_id=user.id) }}">{{ user.following | length
+                            }}</a></h5>
+                </div>
+                <div class="col-6">
+                    <p class="small text-muted mb-0">Followers</p>
+                    <h5><a href="{{ url_for('users.show_followers', user_id=user.id) }}">{{ user.followers | length
+                            }}</a></h5>
+                </div>
+            </div>
         </div>
+
         <div class="card-body text-center">
             {% if g.user.id == user.id %}
             <a href="{{ url_for('users.edit_profile') }}" class="btn btn-outline-secondary btn-sm">Edit Profile</a>
             <form method="POST" action="{{ url_for('users.delete_user', user_id=g.user.id) }}" class="d-inline-block">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-outline-danger btn-sm">Delete Profile</button>
+            </form>
+            {% else %}
+            <form method="POST"
+                action="{% if g.user.is_following(user) %}{{ url_for('users.unfollow_user', follow_id=user.id) }}{% else %}{{ url_for('users.add_follow', follow_id=user.id) }}{% endif %}"
+                class="d-inline-block">
+                <button type="submit"
+                    class="btn {% if g.user.is_following(user) %}btn-outline-secondary{% else %}btn-outline-primary{% endif %} btn-sm">
+                    {% if g.user.is_following(user) %}Unfollow{% else %}Follow{% endif %}
+                </button>
             </form>
             {% endif %}
         </div>

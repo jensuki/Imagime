@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3 class="text-center">Followers</h3>
+
+{% set users = followers %}
+{% include 'partials/_user_list.html' %}
+
+{% endblock %}

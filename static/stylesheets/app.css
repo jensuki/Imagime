@@ -105,6 +105,10 @@ h3 {
     transition: 100ms ease-in-out;
 }
 
+.card.mx-auto {
+    min-height: 420px;
+}
+
 /* home-anon images */
 .home-anon-container {
     display: flex;

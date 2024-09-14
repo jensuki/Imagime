@@ -2,7 +2,7 @@ venv/
 .vscode/
 __pycache__/
 secret.py
-.cache/
+.cache
 /static/images/uploads/
 .env
 .DS_Store

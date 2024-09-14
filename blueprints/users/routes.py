@@ -103,7 +103,7 @@ def list_users():
 
 @users_bp.route('/users/<int:user_id>', methods=['GET'])
 def user_profile(user_id):
-    """Display users profile with their posts if any"""
+    """Display users profile card"""
 
     if not g.user:
         flash('You must be logged in to view this page', 'danger')
@@ -215,3 +215,58 @@ def toggle_favorites_public():
     db.session.commit()
 
     return redirect(url_for('users.show_favorited_songs', user_id=g.user.id))
+
+######## follow routes ###########
+
+@users_bp.route('/users/<int:user_id>/following')
+def show_following(user_id):
+    """Show list of people this user is following."""
+
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect('/')
+
+    user = User.query.get_or_404(user_id)
+    following = user.following
+
+    return render_template('users/following.html', user=user, following=following)
+
+@users_bp.route('/users/<int:user_id>/followers')
+def show_followers(user_id):
+    """Show list of followers of this user."""
+
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect('/')
+
+    user = User.query.get_or_404(user_id)
+    followers = user.followers
+
+    return render_template('users/followers.html', user=user, followers=followers)
+
+@users_bp.route('/users/follow/<int:follow_id>', methods=['POST'])
+def add_follow(follow_id):
+    """Follow a user."""
+
+    do_authorize()
+
+    followed_user = User.query.get_or_404(follow_id)
+    g.user.following.append(followed_user)
+    db.session.commit()
+
+    # Redirect back to the same page (user's profile or list)
+    return redirect(request.referrer or url_for('users.list_users'))
+
+@users_bp.route('/users/unfollow/<int:follow_id>', methods=['POST'])
+def unfollow_user(follow_id):
+    """Unfollow a user."""
+
+    do_authorize()
+
+    followed_user = User.query.get_or_404(follow_id)
+
+    g.user.following.remove(followed_user)
+    db.session.commit()
+
+     # Redirect back to the same page (user's profile or list)
+    return redirect(request.referrer or url_for('users.list_users'))

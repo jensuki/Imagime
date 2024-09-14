@@ -20,9 +20,14 @@ def home():
     """
 
     if g.user:
-        # retrieve 20 most recent posts
+        # get list of user Id's that curr user is following + current users own posts
+        following_ids = [user.id for user in g.user.following]
+        following_ids.append(g.user.id)
+
+        # retrieve 15 most recent posts from followed users and current
         posts = (Post
                  .query
+                 .filter(Post.user_id.in_(following_ids))
                  .order_by(Post.timestamp.desc())
                  .limit(15)
                  .all())

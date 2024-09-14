@@ -5,6 +5,20 @@ from datetime import datetime
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
+class Follow(db.Model):
+    """Association table for followers and followed users"""
+
+    __tablename__ = "follows"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now, nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint('follower_id', 'followed_id', name='unique_follow'),
+    )
+
 class User(db.Model):
     """User model instance"""
 
@@ -23,6 +37,29 @@ class User(db.Model):
 
     # M:M relationship from user --< favorited_songs (user.favorited_songs)(favorited_songs.user)
     favorited_songs = db.relationship('FavoritedSong', backref='user', cascade='all, delete-orphan')
+
+    # define the follows relationship
+    following = db.relationship(
+        'User', secondary='follows',
+        primaryjoin=(Follow.follower_id == id),
+        secondaryjoin=(Follow.followed_id == id),
+        backref='followers'
+    )
+
+    def is_following(self, user):
+        """Check if the current user is following the given user."""
+        return Follow.query.filter(
+            Follow.follower_id == self.id,
+            Follow.followed_id == user.id
+        ).count() > 0
+
+    def is_followed_by(self, user):
+        """Check if the current user is followed by the given user."""
+        return Follow.query.filter(
+            Follow.follower_id == user.id,
+            Follow.followed_id == self.id
+        ).count() > 0
+
 
     def __repr__(self):
         return f"<User id={self.id} username={self.username}, email={self.email}>"
@@ -134,6 +171,7 @@ class FavoritedSong(db.Model):
 
     song = db.relationship('Song', backref='favorited_songs')
     post = db.relationship('Post', backref='favorited_songs')
+
 
 def connect_db(app):
     """Connect DB + app"""
