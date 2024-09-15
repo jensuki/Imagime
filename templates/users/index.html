@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="card-body text-center">
-                    {% if g.user.id != user.id %}
+                    {% if g.user and g.user.id != user.id %}
                     {% if g.user.is_following(user) %}
                     <!-- Form for unfollowing -->
                     <form method="POST" action="{{ url_for('users.unfollow_user', follow_id=user.id) }}">
