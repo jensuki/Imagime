@@ -1,5 +1,5 @@
 import os
-from flask import Flask, session, g, request
+from flask import Flask, session, g, request, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 from blueprints.users.routes import users_bp
@@ -16,6 +16,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 's3cr3tk3y'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql:///imagime_db')
+app.config['SQLALCHEMY_POOL_SIZE'] = 20
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 280
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['DEBUG'] = True
 
@@ -44,3 +46,7 @@ def add_user_to_g():
     else:
         g.user = None
 
+@app.errorhandler(404)
+def page_not_found(e):
+    """Custom 404 error handler"""
+    return render_template('404.html'), 404

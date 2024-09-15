@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 text-center">
+    <h5 class="text-white">Oops! The page you are looking for <br>does not exist or is no longer available.</h5>
+    <a href="{{ url_for('posts.home') }}" class="btn btn-outline-primary mt-4">Go Back Home</a>
+</div>
+
+{% endblock %}
