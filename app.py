@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres
 app.config['SQLALCHEMY_POOL_SIZE'] = 20
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 280
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 
 # ensure the upload folder exists for deploying on render
 upload_folder = os.path.join(os.getcwd(), 'static', 'images', 'uploads')
