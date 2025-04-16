@@ -49,14 +49,14 @@ def image_to_keywords(image_url=None, local_image_file=None, num_keywords=10):
         raise ValueError('You must provide a valid image URL or image file.')
 
     if response.status_code == 200:
-        json_data = response.json()
-        print("Everypixel response JSON:", json_data)  # DEBUG
-        return extract_keywords_only(json_data)
+        return extract_keywords_only(response.json()) # extract keywords from response
     else:
         response.raise_for_status()
 
 def keywords_to_songs(keywords, limit=5):
     """Map keywords to songs"""
+
+    print("Keywords received for song search:", keywords)  # DEBUG
 
     songs = []
     seen_combos = set() # to store unique (title, artist) combos
@@ -64,7 +64,7 @@ def keywords_to_songs(keywords, limit=5):
     for keyword in keywords:
         # search for tracks related to each q keyword with limit
         result = sp.search(q=keyword, type='track', limit=limit)
-
+        print(f"Results for keyword '{keyword}':", result['tracks']['items'])  # DEBUG
 
         for track in result['tracks']['items']:
             title = track['name']
@@ -84,6 +84,9 @@ def keywords_to_songs(keywords, limit=5):
 
                 songs.append(song_details)
                 seen_combos.add(combos) # mark this combo as seen
+
+    if not songs:
+        print("⚠️ No songs found with previews for any keywords.")  # DEBUG
 
     # shuffle songs
     random.shuffle(songs)
