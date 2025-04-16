@@ -49,7 +49,9 @@ def image_to_keywords(image_url=None, local_image_file=None, num_keywords=10):
         raise ValueError('You must provide a valid image URL or image file.')
 
     if response.status_code == 200:
-        return extract_keywords_only(response.json()) # extract keywords from response
+        json_data = response.json()
+        print("Everypixel response JSON:", json_data)  # DEBUG
+        return extract_keywords_only(json_data)
     else:
         response.raise_for_status()
 
