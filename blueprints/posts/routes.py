@@ -83,28 +83,26 @@ def add_post():
                 description=description
             )
             db.session.add(new_post)
-
+            db.session.flush()  # make sure new_post.id exists
 
             for song in songs:
-                existing_song = Song.query.filter_by(preview_url=song['preview_url']).first()
-                if not existing_song:
-                    # add new song to the DB
-                    existing_song = Song(
+                # Always add or get the song by preview_url
+                song_obj = Song.query.filter_by(preview_url=song['preview_url']).first()
+
+                if not song_obj:
+                    song_obj = Song(
                         title=song['title'],
                         artist=song['artist'],
                         spotify_url=song.get('spotify_url'),
                         image_url=song.get('image_url'),
                         preview_url=song.get('preview_url')
                     )
-                    db.session.add(existing_song)
+                    db.session.add(song_obj)
+                    db.session.flush()  # assign song_obj.id
 
-
-                    # check if post-song association already exists
-                    post_song_exists = PostSong.query.filter_by(post_id=new_post.id, song_id=existing_song.id).first()
-                    if not post_song_exists:
-                        # associate post with songs if not already associated
-                        post_song = PostSong(post_id=new_post.id, song_id=existing_song.id)
-                        db.session.add(post_song)
+                # Now link the post and song
+                post_song = PostSong(post_id=new_post.id, song_id=song_obj.id)
+                db.session.add(post_song)
 
             db.session.commit()
             flash('Post successfully added!', 'success')

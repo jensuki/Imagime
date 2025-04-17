@@ -1,0 +1,19 @@
+{
+  "name": "capstone-project-one-ab6b156473cf47138fc149bf79a373ce",
+  "version": "1.0.0",
+  "description": "Imagime is a image-to-music discovery app that allows users to upload their own photos and through the power of AI, get song recommendations tailored to the visual content of the image. Whether you're looking for the perfect track to accompany your latest photo or simply want to explore new music in a more personalized way, Imagime offers a fresh and innovative approach to music exploration.",
+  "main": "get_preview.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "spotify-preview-finder": "^1.1.1"
+  }
+}

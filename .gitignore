@@ -6,3 +6,4 @@ secret.py
 /static/images/uploads/
 .env
 .DS_Store
+node_modules
