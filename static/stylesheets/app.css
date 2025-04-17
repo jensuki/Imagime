@@ -85,6 +85,8 @@ h3 {
     }
 }
 
+
+
 /* left aside user profile card */
 .user-card {
     border: none;
@@ -100,13 +102,18 @@ h3 {
     border: 2px solid #ddd;
 }
 
-
 .btn {
     transition: 100ms ease-in-out;
 }
 
 .card.mx-auto {
     min-height: 420px;
+}
+
+.user-list-card {
+    border-radius: 15px;
+    background: rgb(247, 246, 246);
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* home-anon images */
