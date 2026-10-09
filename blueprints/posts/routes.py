@@ -85,9 +85,10 @@ def add_post():
             db.session.add(new_post)
             db.session.flush()  # make sure new_post.id exists
 
+            linked_song_ids = set()
             for song in songs:
-                # Always add or get the song by preview_url
-                song_obj = Song.query.filter_by(preview_url=song['preview_url']).first()
+                # Previews can be missing or shared; identify the Spotify track.
+                song_obj = Song.query.filter_by(spotify_url=song['spotify_url']).first()
 
                 if not song_obj:
                     song_obj = Song(
@@ -100,9 +101,13 @@ def add_post():
                     db.session.add(song_obj)
                     db.session.flush()  # assign song_obj.id
 
-                # Now link the post and song
+                # Recommendations can contain the same track more than once.
+                if song_obj.id in linked_song_ids:
+                    continue
+
                 post_song = PostSong(post_id=new_post.id, song_id=song_obj.id)
                 db.session.add(post_song)
+                linked_song_ids.add(song_obj.id)
 
             db.session.commit()
             flash('Post successfully added!', 'success')
