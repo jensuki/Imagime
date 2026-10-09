@@ -100,6 +100,9 @@ def add_post():
                     )
                     db.session.add(song_obj)
                     db.session.flush()  # assign song_obj.id
+                elif song.get('preview_url'):
+                    # A previous lookup may have failed or returned an old URL.
+                    song_obj.preview_url = song['preview_url']
 
                 # Recommendations can contain the same track more than once.
                 if song_obj.id in linked_song_ids:

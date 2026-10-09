@@ -1,5 +1,13 @@
 require('dotenv').config();
 
+// Use the same credentials as the Python app unless Node-specific ones are set.
+if (!process.env.SPOTIFY_CLIENT_ID && process.env.SPOT_CLIENT_ID) {
+    process.env.SPOTIFY_CLIENT_ID = process.env.SPOT_CLIENT_ID;
+}
+if (!process.env.SPOTIFY_CLIENT_SECRET && process.env.SPOT_API_KEY) {
+    process.env.SPOTIFY_CLIENT_SECRET = process.env.SPOT_API_KEY;
+}
+
 const spotifyPreviewFinder = require('spotify-preview-finder');
 
 const query = process.argv[2];
@@ -20,7 +28,7 @@ async function run() {
             }
             console.log(JSON.stringify(response));  // what python will parse
         } else {
-            console.log(JSON.stringify({ previewUrls: [] }))
+            console.log(JSON.stringify({ previewUrls: [], error: result.error || 'No preview found' }))
         }
     } catch (err) {
         // if error

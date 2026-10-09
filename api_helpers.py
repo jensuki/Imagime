@@ -6,6 +6,9 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import subprocess
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Load credentials from environment variables
 EPIX_CLIENT_ID = os.getenv("EPIX_CLIENT_ID")
@@ -21,23 +24,29 @@ def get_preview_url_from_node(query):
     try:
         # call node script using subprocess and pass in the song query
         result = subprocess.run(
-            ['node', 'get_preview.js', query], # run : node get_preview.js 'song name'
+            ['node', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'get_preview.js'), query],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
-            check=True
+            check=True,
+            timeout=20
         )
 
         # grab json output from node script
         output = result.stdout.strip()
         data = json.loads(output)
 
+        if data.get('error'):
+            logger.warning('Preview lookup failed: %s', data['error'])
+
         # return the first preview URL if it exists
         if data.get("previewUrls"):
             return data["previewUrls"][0]
 
-    except Exception as e:
-        print("Error getting preview from Node:", e)
+    except subprocess.CalledProcessError as e:
+        logger.warning('Preview helper exited with code %s: %s', e.returncode, e.stderr)
+    except (OSError, subprocess.TimeoutExpired, ValueError) as e:
+        logger.warning('Preview helper failed: %s', e)
 
     return None  # fallback if nothing found
 
@@ -103,8 +112,7 @@ def keywords_to_songs(keywords, limit=3):
 
             # only add songs with unique title-artist combos to avoid dupes
             if combos not in seen_combos:
-                preview = get_preview_url_from_node(f"{title} {artist}") # get prev from node script
-                print(f"🔊 Preview URL for {title} by {artist}: {preview}")  # DEBUG
+                preview = track.get('preview_url') or get_preview_url_from_node(f"{title} {artist}")
 
                 song_details = {
                     'title': title,

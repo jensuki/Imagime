@@ -30,36 +30,70 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentAudio = null;
     let currentButton = null;
 
+    function hasPreview(url) {
+        return typeof url === 'string' && /^https?:\/\//i.test(url);
+    }
+
+    function markPreviewUnavailable(button) {
+        button.disabled = true;
+        button.innerHTML = '<i class="fa fa-play"></i>';
+        const player = button.closest('.audio-player');
+        if (!player.querySelector('.preview-status')) {
+            const status = document.createElement('span');
+            status.className = 'preview-status';
+            status.setAttribute('role', 'status');
+            status.textContent = 'Preview unavailable · Listen using the Spotify song link above.';
+            player.appendChild(status);
+        }
+    }
+
     // Function to play/pause the audio
-    function togglePlay(button) {
+    async function togglePlay(button) {
         const audioUrl = button.getAttribute('data-audio');
+        if (!hasPreview(audioUrl)) {
+            markPreviewUnavailable(button);
+            return;
+        }
         const progressBar = button.closest('.audio-player').querySelector('.progress-bar');
 
         // Pause the current track if a new one is played
-        if (currentAudio && currentAudio.src !== audioUrl) {
+        if (currentAudio && currentButton !== button) {
             currentAudio.pause();
             currentButton.innerHTML = '<i class="fa fa-play"></i>';
         }
 
-        if (!currentAudio || currentAudio.src !== audioUrl) {
+        if (!currentAudio || currentButton !== button) {
             currentAudio = new Audio(audioUrl);
             currentButton = button;
-            currentAudio.play();
-            button.innerHTML = '<i class="fa fa-pause"></i>';
+            const audio = currentAudio;
 
-            currentAudio.addEventListener('timeupdate', () => {
-                const percentage = (currentAudio.currentTime / currentAudio.duration) * 100;
-                progressBar.style.width = `${percentage}%`;
+            audio.addEventListener('timeupdate', () => {
+                if (Number.isFinite(audio.duration) && audio.duration > 0) {
+                    const percentage = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = `${percentage}%`;
+                }
             });
 
-            currentAudio.addEventListener('ended', () => {
+            audio.addEventListener('ended', () => {
                 button.innerHTML = '<i class="fa fa-play"></i>';
                 progressBar.style.width = '0%';
             });
+            audio.addEventListener('error', () => markPreviewUnavailable(button));
+        }
 
-        } else if (currentAudio.paused) {
-            currentAudio.play();
-            button.innerHTML = '<i class="fa fa-pause"></i>';
+        if (currentAudio.paused) {
+            const audio = currentAudio;
+            try {
+                await audio.play();
+                if (currentAudio === audio && !audio.paused) {
+                    button.innerHTML = '<i class="fa fa-pause"></i>';
+                }
+            } catch (error) {
+                // Switching tracks can interrupt an in-flight play request.
+                if (error.name !== 'AbortError') {
+                    markPreviewUnavailable(button);
+                }
+            }
         } else {
             currentAudio.pause();
             button.innerHTML = '<i class="fa fa-play"></i>';
@@ -70,7 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to attach the play/pause event listeners
     function attachPlayListeners() {
         document.querySelectorAll('.play-btn').forEach(button => {
-            button.onclick = () => togglePlay(button);
+            if (hasPreview(button.getAttribute('data-audio'))) {
+                button.onclick = () => togglePlay(button);
+            } else {
+                markPreviewUnavailable(button);
+            }
         });
     }
 
@@ -163,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     </a>
                                 </p>
                                 <div class="audio-player">
-                                    <button class="play-btn" data-audio="${song.preview_url}">
+                                    <button class="play-btn" data-audio="" aria-label="Play preview">
                                         <i class="fa fa-play"></i>
                                     </button>
                                     <div class="progress">
@@ -178,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             </button>
                         </form>
                     `;
+                        li.querySelector('.play-btn').setAttribute('data-audio', song.preview_url || '');
                         songList.appendChild(li);
                     });
 

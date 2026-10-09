@@ -6,6 +6,20 @@ Imagime is a image-to-music discovery app that allows users to upload their own 
 
 ## To use Imagime, visit [Imagime](https://imagime.onrender.com)
 
+### Preview playback setup
+
+The preview fallback runs `get_preview.js` from Python. The deployment needs Node.js
+available on `PATH` and the JavaScript dependencies installed with `npm ci`, in
+addition to the Python requirements. Set `SPOT_CLIENT_ID` and `SPOT_API_KEY` for the
+Python Spotify client; the Node helper now accepts these same names. Explicit
+`SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` values take precedence in Node.
+
+If previews are missing after a new upload, check server logs for `Preview lookup
+failed` or `Preview helper`. These distinguish provider errors from missing Node
+or dependencies. Songs without previews display a Spotify listening link. Existing
+missing previews are filled when the same track is recommended again with a valid
+preview; redeploying alone does not update saved song rows.
+
 ## Features
 
 - **Image-Based Music Recommendations**: Upload an image, and Imagime will suggest songs that match the mood, theme, or elements within your photo.

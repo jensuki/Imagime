@@ -98,3 +98,12 @@ class PostSongUploadTestCase(TestCase):
         post = self.upload([self.track(1, 'https://example.com/new.mp3')])
         self.assertEqual([song.id for song in post.songs], [existing.id])
         self.assertEqual(Song.query.count(), 1)
+        self.assertEqual(existing.preview_url, 'https://example.com/new.mp3')
+
+    def test_missing_preview_is_filled_by_later_recommendation(self):
+        self.upload([self.track(1)])
+        post = self.upload([self.track(1, 'https://example.com/preview.mp3')])
+        self.assertEqual(Song.query.count(), 1)
+        self.assertEqual(post.songs[0].preview_url, 'https://example.com/preview.mp3')
+        self.upload([self.track(1)])
+        self.assertEqual(Song.query.first().preview_url, 'https://example.com/preview.mp3')
