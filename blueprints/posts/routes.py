@@ -87,9 +87,7 @@ def add_post():
 
             for song in songs:
                 # Always add or get the song by preview_url
-                song_obj = Song.query.filter_by(
-                    preview_url=song['preview_url']
-                ).first()
+                song_obj = Song.query.filter_by(preview_url=song['preview_url']).first()
 
                 if not song_obj:
                     song_obj = Song(
@@ -102,18 +100,9 @@ def add_post():
                     db.session.add(song_obj)
                     db.session.flush()  # assign song_obj.id
 
-                # Only link each song to this post once
-                existing_post_song = PostSong.query.filter_by(
-                    post_id=new_post.id,
-                    song_id=song_obj.id
-                ).first()
-
-                if not existing_post_song:
-                    post_song = PostSong(
-                        post_id=new_post.id,
-                        song_id=song_obj.id
-                    )
-                    db.session.add(post_song)
+                # Now link the post and song
+                post_song = PostSong(post_id=new_post.id, song_id=song_obj.id)
+                db.session.add(post_song)
 
             db.session.commit()
             flash('Post successfully added!', 'success')
